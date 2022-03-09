@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import InstaStory from "../../react-native-insta-story/index";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { db } from "../../firebase";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import Dish from "./Dish";
 import Modal from "react-native-modal";
 import FilterModal from "./FilterModal";
@@ -16,9 +16,12 @@ const RestaurantPage = ({ navigation, route }) => {
     navigation.setOptions({ headerTitle: params.name, });
   })
   const [dishes, setDishes] = useState([]);
+  const [restrictions, setRestrictions] = useState([]);
+  const [diets, setDiets] = useState([]);
+  const [chosenRestrictions, setChosenRestrictions] = useState([]);
+  const [chosenDiets, setChosenDiets] = useState([]);
 
-  // Get all documents from a collection
-  const getAllDocuments = async (category) => {
+  const getDishesInCat = async (category) => {
     // let allDocs = await getDocs(collection(db, params.name).collection(db, "menu").collection(db, category));
     // console.log(category)
     // let allDocs = await getDocs(collection(db, "restaurants").doc(db, "restaurant-1").collection(db, "mains"));
@@ -27,7 +30,6 @@ const RestaurantPage = ({ navigation, route }) => {
     // doc(db, "rooms", "roomA", "messages", "message1");
     
     // let allDocs = await getDocs(db.collection("restaurants").document("restaurant-1").collection("mains"));
-
 
     // db.collection('rooms').doc('roomA').collection('messages').doc('message1');
     // Printing out the array of documents (objects), probably put this in state variable
@@ -42,8 +44,26 @@ const RestaurantPage = ({ navigation, route }) => {
     // console.log("hello");
   };
 
+  // Retrieiving a document from Firestore
+  let userName = "user";
+  const getPreferences = async (userName) => {
+    const docRef = doc(db, "users", "user");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // setSongData(docSnap.data());
+      const result = [...new Set([...restrictions, ...docSnap.data().restrictions])]
+      console.log(result)
+      setRestrictions(result);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  };
+
   useEffect(() => {
-    getAllDocuments("mains");    // change to All
+    getDishesInCat("mains");    // change to All
+    getPreferences("user")
   }, []);
 
   const renderDishes = ({item, navigation}) => {
@@ -60,9 +80,36 @@ const RestaurantPage = ({ navigation, route }) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [actionTriggered, setActionTriggered] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  
+
+  // useEffect(() => {
+  //   console.log(sortBy)
+  // }, [sortBy]);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const applyFilters = () => {
+    setModalVisible(!isModalVisible);
+
+  };
+
+  const applySort = () => {
+    setModalVisible(!isModalVisible);
+    if (sortBy === "Popularity") {
+      console.log("try change")
+      // setDishes(dishes.sort((a, b) => (a.popularity > b.popularity ? 1 : -1)))
+      dishes.sort((a, b) => (a.popularity < b.popularity ? 1 : -1))   
+
+    } else if (sortBy === "Wait time") {
+      dishes.sort((a, b) => (a.wait > b.wait ? 1 : -1))   
+    } else if (sortBy === "Price: low to high") {
+      dishes.sort((a, b) => (a.price > b.price ? 1 : -1))
+    } else if (sortBy === "Price: high to low") {
+      dishes.sort((a, b) => (a.price < b.price ? 1 : -1))
+    }
   };
 
   let category = "mains";
@@ -154,8 +201,8 @@ const RestaurantPage = ({ navigation, route }) => {
                   <View style={styles.filterSortHeaderView}>
                     <Text style={styles.filterSortHeaderText}>Sort By</Text>
                   </View>
-                  <SortModal/>
-                  <Pressable onPress={toggleModal}>
+                  <SortModal changeSortBy={setSortBy} />
+                  <Pressable onPress={applySort}>
                     <View style={styles.button}>
                       <Text style={styles.buttonTitle}>APPLY SORT</Text>
                     </View>

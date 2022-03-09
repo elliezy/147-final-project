@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import RadioButtonRN from 'radio-buttons-react-native';
 
 
-const SortModal = () => {
+const SortModal = ({changeSortBy}) => {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const SortModal = () => {
             circleSize={24}
             // boxActiveBgColor={'#F1EBEA'}
             // boxDeactiveBgColor={'#F1EBEA'}
-            selectedBtn={(e) => console.log(e)}
+            selectedBtn={(e) => changeSortBy(e.label)}
         />
         {/* <RadioForm
             radio_props={radio_props}
@@ -115,67 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginLeft: "4%",
     marginTop: "4%",
-
   },
-
-  button: {
-    backgroundColor: '#f8b432',
-    borderRadius: 10,    
-    height: 50,   
-  },
-  buttonTitle: {
-    fontSize: 18,
-    fontWeight: 'bold', 
-  },
-  buttonContainer: {
-    width: '100%',
-    marginHorizontal: 50,
-    marginVertical: 10,
-  },
-
-
-
-
-  top: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    display: "flex",
-    flexDirection: "row",
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    paddingBottom: 12,
-  },
-  subtitle: {
-    fontSize: 20,
-    marginRight: 10,
-  },
-
-  body: {
-    flex: 4,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    // borderWidth: 1,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    paddingBottom: 16,
-  },
-
-  bottom: {
-    flex: 2,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  bottomText: {
-    fontSize: 16,
-    fontWeight: '300',
-    fontStyle: 'italic',
-    color: 'grey',
-    textAlign: 'center',
-  }
 
 });
