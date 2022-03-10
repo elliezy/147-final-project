@@ -34,7 +34,7 @@ const StoryCircleListItem = (props) => {
         setIsPressed(true);
     };
 
-    const size = avatarSize ?? 100;
+    const size = avatarSize ?? 90;
 
     return (
         <View style={styles.container}>
@@ -43,7 +43,7 @@ const StoryCircleListItem = (props) => {
                 style={[
                     styles.avatarWrapper,
                     {
-                        height: avatarSize ?? 130 + 4,
+                        height: avatarSize ?? 115 + 4,
                         width: size + 4,
                     },
                     // !isPressed
@@ -61,7 +61,7 @@ const StoryCircleListItem = (props) => {
             >
                 <ImageBackground
                     style={{
-                        height: avatarSize ?? 130,
+                        height: avatarSize ?? 115,
                         width: size,
                         borderRadius: 18,
                     }}

@@ -178,7 +178,7 @@ const RestaurantPage = ({ navigation, route }) => {
             </View>
 
             <Modal isVisible={isModalVisible} style={{ margin: 0 }}>
-              {actionTriggered === 'filter' ?
+              <>{actionTriggered === 'filter' ?
                 <View style={styles.modalView}>
                   <Pressable onPress={toggleModal}>
                     <Text style={styles.xOut}> x </Text>
@@ -209,7 +209,7 @@ const RestaurantPage = ({ navigation, route }) => {
                   </Pressable>
                 {/* <FilterModal/> */}
               </View> :
-              null}
+              null}</>
             </Modal>
 
           </View>
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     paddingLeft: "14%",
     paddingRight: "10%",
     paddingTop: "1%",
-    paddingBottom: "3%",
+    paddingBottom: "4%",
   },
   bottomHeaderView: {
     display: "flex",
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: 'left',
     fontSize: 26,
-    marginBottom: 4,
+    // marginBottom: 1,
     fontWeight: "bold",
     // paddingLeft: "5%",
   }, 
