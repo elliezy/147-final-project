@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     
   },
   dropdownView: {
-    flex: 5,
+    flex: 4,
     display: "flex",
     flexDirection: "row",
     // marginBottom: "1%",
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     flex: 1,
-    marginLeft: 24,
+    marginLeft: 18,
     // paddingRight: "5%",
     // backgroundColor: "yellow",
   },
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
     marginRight: 2,
-    marginLeft: 4,
+    marginLeft: 3,
   },
   modalView: {
     // flex: 1,
