@@ -1,38 +1,63 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import DietaryRestrictions from "./DietaryRestrictions";
 import SpecialDiets from "./SpecialDiets";
 
-const ProfileScreen = ({ firstName }) => {
+import { db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+
+const ProfileScreen = ({ currentUser }) => {
   const navigation = useNavigation();
+  const [name, setName] = React.useState("");
 
   useEffect(() => {
     navigation.getParent()?.setOptions({ tabBarStyle: {backgroundColor: "#f8b432", paddingBottom: "4%",},});
-    return () => navigation.getParent()?.setOptions({ tabBarStyle: {backgroundColor: "#f8b432", paddingBottom: "4%",}, });
-  }, [navigation]);
+  });
+
+  const getUser = async () => {
+    try {
+      const docRef = doc(db, "users", currentUser);
+      const docSnap = await getDoc(docRef);
+      setName(docSnap.data().name.split(" ")[0]);
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    navigation.getParent()?.setOptions({ tabBarStyle: {backgroundColor: "#f8b432", paddingBottom: "4%",},});
+    getUser();
+  }, []);
 
   return (
     <View style={styles.container}>
 
       <View style={styles.top}>
-        <Text style={styles.title}>Hey, {firstName}</Text>
-        <Text style={styles.subtitle}>Complete your dietary profile!</Text>
+        <View style={styles.settings}>
+          <Text style={styles.title}>Hey, {name}</Text>
+          <Pressable onPress={() => navigation.navigate('SettingsScreen')}>
+            <Ionicons name='settings-outline' size={30} color='black' />
+          </Pressable>
+        </View>
+        
+        <Text style={styles.subtitle}>Get noms to work just for you!</Text>
       </View>
 
       <View style={styles.body}>
         <Text style={styles.header}>Dietary Restrictions</Text>
-        <DietaryRestrictions />
+        <DietaryRestrictions currentUser={currentUser} />
       </View>
 
       <View style={styles.body}>
         <Text style={styles.header}>Special Diets</Text>
-        <SpecialDiets />
+        <SpecialDiets currentUser={currentUser} />
       </View>
 
-      <View style={styles.bottom}>
-        <Text style={styles.bottomText}>Your choices help us filter and recommend food that works for you.</Text>
+      <View style={styles.bottom}> 
+        <Text style={styles.bottomText}>Come back and update your choices at any time! </Text>
       </View>
 
       
@@ -48,46 +73,56 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     backgroundColor: 'white',
-    paddingTop: 80,
-    paddingHorizontal: '12%',
+    paddingTop: '20%',
+    paddingBottom: '8%',
   },
 
   top: {
-    flex: 2,
+    flex: 2.5,
     alignItems: "flex-start",
-    justifyContent: "flex-start",
+    paddingHorizontal: '8%',
+  },
+  settings: {
+    flexDirection: 'row',
+    alignSelf: "stretch",
+    justifyContent: 'space-between',
   },
   title: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: '800',
-    paddingBottom: 12,
+    paddingBottom: '4%',
   },
   subtitle: {
     fontSize: 20,
+    fontWeight: '300',
+    paddingBottom: '2%',
   },
 
   body: {
-    flex: 4,
+    flex: 5,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    paddingBottom: 16,
+    paddingBottom: '5%',
+    paddingHorizontal: '8%',
   },
 
   bottom: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
+    paddingHorizontal: '10%',
   },
   bottomText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '300',
     fontStyle: 'italic',
     color: 'grey',
     textAlign: 'center',
-  }
+  },
+  
 
 });

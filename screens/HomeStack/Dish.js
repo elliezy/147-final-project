@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         // backgroundColor: "#F1EBEA",
         borderRadius: 20,
         marginBottom: 12,
+        marginLeft: "1.5%",
         // padding: 10,
         // margin: 8,
     },

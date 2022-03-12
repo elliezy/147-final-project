@@ -20,8 +20,8 @@ const OnboardingSwiper = ({ setFinishedOnboarding }) => {
 
   return (
     <Onboarding
-      titleStyles={{ fontWeight: 'bold' }}
-      subTitleStyles={{ paddingHorizontal: 20 }}
+      titleStyles={styles.title}
+      subTitleStyles={styles.subtitle}
       bottomBarHighlight={false}
 
       onSkip={() => {
@@ -35,21 +35,21 @@ const OnboardingSwiper = ({ setFinishedOnboarding }) => {
           backgroundColor: '#f8b432',
           image: <Ionicons name='map' size={100} color='black' />,
           title: 'Restaurant Walkthroughs',
-          subtitle: 'See a “step by step” walkthrough of the dining experience at restaurants.',
+          subtitle: 'See the "step by step" dining experience at restaurants.',
         },
         {
           backgroundColor: '#f8b432',
           image: <Ionicons name='book' size={100} color='black' />,
           title: 'Filter & Sort Menus',
-          subtitle: 'Easily filter out dishes based on your personal dietary restrictions.',
+          subtitle: 'Easily pick out dishes that fit your personal dietary profile.',
         },
         {
           backgroundColor: '#f8b432',
           image: <Ionicons name='restaurant' size={100} color='black' />,
-          title: 'Get Personalized Noms',
+          title: 'Personalized Noms',
           subtitle: ( 
             <View style={styles.container}>
-              <Text style={styles.subtitle}>Get recommendations tailored to your taste, budget, and restrictions!</Text>
+              <Text style={styles.subtitle}>Get recommendations tailored to your taste and restrictions!</Text>
               <Button 
                 title={'Get Started'} 
                 onPress={() => {navigation.navigate("RegisterScreen")}} 
@@ -69,13 +69,21 @@ export default OnboardingSwiper;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     paddingHorizontal: '10%',
   },
+
+  title: {
+    fontSize: 40,
+    fontWeight: '800', 
+    paddingHorizontal: '5%',
+  },
   subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#513b11',
+    fontSize: 20,
+    fontWeight: '300',
+    color: 'black',
+    textAlign: 'center', 
+    paddingHorizontal: '5%', 
   },
 
   button: {
@@ -86,12 +94,12 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 16,
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   buttonContainer: {
     justifyContent: "flex-end",
     position: 'absolute',
-    top: '600%',
+    top: '420%',
     width: '100%',  
   }
 });
