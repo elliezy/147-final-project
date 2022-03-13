@@ -69,15 +69,14 @@ const RestaurantPage = ({ navigation, route, currentUser }) => {
   };
 
   const applySort = () => {
-    console.log(category)
     if (sortBy === "Popularity") {
       dishes.sort((a, b) => (a.popularity < b.popularity ? 1 : -1))   
     } else if (sortBy === "Wait time") {
       dishes.sort((a, b) => (a.wait > b.wait ? 1 : -1))   
     } else if (sortBy === "Price: low to high") {
-      dishes.sort((a, b) => (a.price > b.price ? 1 : -1))
+      dishes.sort((a, b) => (parseFloat(a.price.slice(1)) > parseFloat(b.price.slice(1)) ? 1 : -1))
     } else if (sortBy === "Price: high to low") {
-      dishes.sort((a, b) => (a.price < b.price ? 1 : -1))
+      dishes.sort((a, b) => (parseFloat(a.price.slice(1)) < parseFloat(b.price.slice(1)) ? 1 : -1))
     }
   };
 

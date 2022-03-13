@@ -5,17 +5,20 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PreferencesScreen from "./PreferencesScreen";
 import QuestionsScreen from "./QuestionsScreen";
 import ResultsScreen from "./ResultsScreen";
+import RestaurantPage from "../HomeStack/RestaurantPage";
+import MoreInfo from "../HomeStack/MoreInfo";
+
 
 const Stack = createStackNavigator();
 
 const RecommendationStack = ({ currentUser }) => {
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false
-      }}
+      // screenOptions={{
+      //   headerShown: false
+      // }}
     >
-      <Stack.Screen name="PreferencesScreen">
+      <Stack.Screen name="PreferencesScreen" options={{headerShown: false}}>
         {(props) => (
           <PreferencesScreen
             {...props}
@@ -23,8 +26,8 @@ const RecommendationStack = ({ currentUser }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="QuestionsScreen" component={QuestionsScreen} />
-      <Stack.Screen name="ResultsScreen">
+      <Stack.Screen name="QuestionsScreen" component={QuestionsScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="ResultsScreen" options={{headerShown: false}}>
         {(props) => (
           <ResultsScreen
             {...props}
@@ -32,6 +35,42 @@ const RecommendationStack = ({ currentUser }) => {
           />
         )}
       </Stack.Screen>
+      <Stack.Screen name="RestaurantPage" options={{
+        headerStyle: {
+          backgroundColor: '#f8b432',
+          // backgroundColor: 'yellow',
+        },
+        headerTitleStyle: {
+          fontWeight: '800',
+          fontSize: 28,
+          left: -26,
+        },
+        headerLeftContainerStyle: {
+          paddingLeft: '2%',
+        },
+        headerBackTitleVisible: false,
+        headerTintColor: 'black',
+        headerTitleAlign: 'left',
+      }}>
+        {(props) => (
+          <RestaurantPage
+            {...props}
+            currentUser={currentUser}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="MoreInfo" component={MoreInfo} options={{
+        headerStyle: {
+          backgroundColor: '#f8b432',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 28,
+        },
+        headerBackTitleVisible: false,
+        headerTintColor: 'black',
+        headerTitleAlign: 'left',
+      }} />
     </Stack.Navigator>
   );
 };
